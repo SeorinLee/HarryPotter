@@ -1,4 +1,6 @@
 # HarryPotter
+
+<img width="741" alt="Screenshot 2025-06-16 at 4 49 36 pm" src="https://github.com/user-attachments/assets/cd325ebf-4880-4723-874c-cf53242f41ed" />
 📦HarryPotterBookApp
 ├── 📁Model
 │   ├── Book.swift
@@ -25,6 +27,7 @@
 │   └── BookViewController.swift        // 전체 View들을 조합하는 VC
 │
 ├── 📁Service
+
 │   └── DataService.swift               // JSON 파싱 로직
 │
 └── 📁Utils
