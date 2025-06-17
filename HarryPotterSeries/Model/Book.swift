@@ -16,6 +16,7 @@ struct BookData: Codable {
 
 struct BookAttributes: Codable {
     let title: String
+    let coverImage: String
     let author: String
     let pages: Int
     let release_date: String
@@ -23,6 +24,7 @@ struct BookAttributes: Codable {
     let summary: String
     let wiki: String
     let chapters: [Chapter]
+    
 }
 
 struct Chapter: Codable {
