@@ -10,6 +10,7 @@
 ├── 📁View
 │   ├── 📁Components
 │   │   ├── TitleView.swift             // 책 제목 + 시리즈 순서 라벨
+|   |   ├──  BookCoverView.swift        // 표지 이미지만 담당
 │   │   ├── BookInfoView.swift          // 책 표지, 제목, 저자, 출간일, 페이지수
 │   │   ├── DedicationView.swift        // 헌정사
 │   │   ├── SummaryView.swift           // 요약 (더보기/접기 포함)

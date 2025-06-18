@@ -10,26 +10,60 @@ import SnapKit
 
 class DedicationView: UIView {
     
-    private let dedicationLabel = UILabel()
+    // MARK: - UI Elements
+    
+    private let titleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Dedication"
+        label.font = .boldSystemFont(ofSize: 18)
+        label.textColor = .black
+        return label
+    }()
+    
+    private let contentLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 14)
+        label.textColor = .darkGray
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    private let stackView: UIStackView = {
+        let stack = UIStackView()
+        stack.axis = .vertical
+        stack.spacing = 8 // 타이틀과 내용 사이 간격
+        return stack
+    }()
+    
+    // MARK: - Init
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupUI()
+        setupLayout()
     }
-    required init?(coder: NSCoder) { fatalError() }
     
-    private func setupUI() {
-        addSubview(dedicationLabel)
-        dedicationLabel.numberOfLines = 0
-        dedicationLabel.font = .italicSystemFont(ofSize: 14)
-        dedicationLabel.textColor = .gray
+    required init?(coder: NSCoder) {
+        fatalError()
+    }
+    
+    // MARK: - Layout
+    
+    private func setupLayout() {
+        stackView.addArrangedSubview(titleLabel)
+        stackView.addArrangedSubview(contentLabel)
         
-        dedicationLabel.snp.makeConstraints {
-            $0.edges.equalToSuperview().inset(12)
+        addSubview(stackView)
+        
+        stackView.snp.makeConstraints {
+            $0.top.equalToSuperview().offset(24) // 책 정보 영역과 24 간격
+            $0.leading.trailing.equalToSuperview().inset(20) // 좌우 20
+            $0.bottom.lessThanOrEqualToSuperview()
         }
     }
     
+    // MARK: - Configure
+    
     func configure(with dedication: String) {
-        dedicationLabel.text = dedication
+        contentLabel.text = dedication
     }
 }

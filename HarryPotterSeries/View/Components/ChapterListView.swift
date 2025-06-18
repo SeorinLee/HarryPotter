@@ -10,38 +10,41 @@ import SnapKit
 
 class ChapterListView: UIView {
     
-    private let scrollView = UIScrollView()
     private let stackView = UIStackView()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupUI()
     }
-    required init?(coder: NSCoder) { fatalError() }
+
+    required init?(coder: NSCoder) {
+        fatalError()
+    }
     
     private func setupUI() {
-        addSubview(scrollView)
-        scrollView.addSubview(stackView)
-        
-        scrollView.showsVerticalScrollIndicator = true
-        
+        addSubview(stackView)
+
         stackView.axis = .vertical
         stackView.spacing = 8
-        
-        scrollView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
-            $0.height.equalTo(200)  // 높이 제한
-        }
+        stackView.alignment = .leading  // 텍스트 왼쪽 정렬
+
         stackView.snp.makeConstraints {
             $0.edges.equalToSuperview()
-            $0.width.equalToSuperview()
         }
     }
     
     func configure(with chapters: [Chapter]) {
-        // 기존 서브뷰 제거
+        // 기존 라벨 제거
         stackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
-        
+
+        // 챕터 타이틀 추가
+        let titleLabel = UILabel()
+        titleLabel.text = "Chapters"
+        titleLabel.font = .boldSystemFont(ofSize: 18)
+        titleLabel.textColor = .black
+        stackView.addArrangedSubview(titleLabel)
+
+        // 챕터 리스트 추가
         for chapter in chapters {
             let label = UILabel()
             label.text = chapter.title
