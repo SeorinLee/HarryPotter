@@ -29,9 +29,12 @@ class ChapterListView: UIView {
         stackView.alignment = .leading  // 텍스트 왼쪽 정렬
 
         stackView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
+            $0.top.equalToSuperview().offset(24) // 위 여백
+            $0.leading.trailing.equalToSuperview().inset(20) // 좌우 여백
+            $0.bottom.lessThanOrEqualToSuperview() // 너무 커지지 않도록 제한
         }
     }
+    
     
     func configure(with chapters: [Chapter]) {
         // 기존 라벨 제거
