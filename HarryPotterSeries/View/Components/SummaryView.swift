@@ -10,6 +10,7 @@ import SnapKit
 
 class SummaryView: UIView {
     
+    private let maxCharacterCount = 450
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "Summary"
@@ -22,7 +23,7 @@ class SummaryView: UIView {
         let label = UILabel()
         label.font = .systemFont(ofSize: 14)
         label.textColor = .darkGray
-        label.numberOfLines = 3
+        label.numberOfLines = 0 // 줄 수 제약 없음
         return label
     }()
     
@@ -30,7 +31,7 @@ class SummaryView: UIView {
         let button = UIButton(type: .system)
         button.setTitle("더보기", for: .normal)
         button.titleLabel?.font = .systemFont(ofSize: 14)
-        button.isHidden = true // 기본은 숨김
+        button.isHidden = true
         return button
     }()
     
@@ -43,16 +44,14 @@ class SummaryView: UIView {
     
     private var isExpanded: Bool = false {
         didSet {
-            updateUI()
+            updateText()
             saveState()
         }
     }
+    
     private var fullText: String = ""
     
-    // 상태 저장 키
     private let summaryStateKey = "summary_isExpanded"
-    
-    // MARK: - Init
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -63,8 +62,6 @@ class SummaryView: UIView {
     required init?(coder: NSCoder) {
         fatalError()
     }
-    
-    // MARK: - Layout
     
     private func setupLayout() {
         toggleButton.addTarget(self, action: #selector(toggleSummary), for: .touchUpInside)
@@ -82,40 +79,35 @@ class SummaryView: UIView {
         }
     }
     
-    // MARK: - Actions
-    
     @objc private func toggleSummary() {
         isExpanded.toggle()
     }
     
-    // MARK: - Configure
-    
     func configure(with summary: String) {
         fullText = summary
-        
-        let isLong = summary.count >= 450
+        let isLong = summary.count > maxCharacterCount
         toggleButton.isHidden = !isLong
-        summaryLabel.text = summary
-
+        
         if isLong {
-            // 저장된 상태 반영
             loadState()
-            updateUI()
+            updateText()
         } else {
-            // 글자가 짧을 경우 무조건 펼침
-            summaryLabel.numberOfLines = 0
+            summaryLabel.text = summary
+            isExpanded = false
         }
     }
 
-    
-    // MARK: - UI 업데이트
-    
-    private func updateUI() {
-        summaryLabel.numberOfLines = isExpanded ? 0 : 5
-        toggleButton.setTitle(isExpanded ? "접기" : "더보기", for: .normal)
+    private func updateText() {
+        if isExpanded {
+            summaryLabel.text = fullText
+            toggleButton.setTitle("접기", for: .normal)
+        } else {
+            let index = fullText.index(fullText.startIndex, offsetBy: min(maxCharacterCount, fullText.count))
+            let truncated = fullText[..<index] + "..."
+            summaryLabel.text = String(truncated)
+            toggleButton.setTitle("더보기", for: .normal)
+        }
     }
-    
-    // MARK: - 상태 저장 / 복원
     
     private func saveState() {
         UserDefaults.standard.set(isExpanded, forKey: summaryStateKey)
