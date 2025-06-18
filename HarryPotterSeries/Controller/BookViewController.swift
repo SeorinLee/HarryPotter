@@ -14,13 +14,13 @@ class BookViewController: UIViewController {
     private var books: [BookAttributes] = []
     
     private let titleView = TitleView()
+    private let scrollView = UIScrollView()
+    private let contentView = UIView()
+    
     private let bookInfoView = BookInfoView()
     private let dedicationView = DedicationView()
     private let summaryView = SummaryView()
     private let chapterListView = ChapterListView()
-    
-    private let scrollView = UIScrollView()
-    private let contentView = UIView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,28 +33,40 @@ class BookViewController: UIViewController {
     }
     
     private func setupUI() {
+        // TitleView는 view에 직접 추가 (고정 위치)
+        view.addSubview(titleView)
+        
+        // ScrollView 안에 나머지 뷰들 추가
         view.addSubview(scrollView)
         scrollView.addSubview(contentView)
         
-        [titleView, bookInfoView, dedicationView, summaryView, chapterListView].forEach {
+        [bookInfoView, dedicationView, summaryView, chapterListView].forEach {
             contentView.addSubview($0)
         }
+
+        // 스크롤바 제거
+        scrollView.showsVerticalScrollIndicator = false
         
-        scrollView.snp.makeConstraints {
-            $0.edges.equalTo(view.safeAreaLayoutGuide)
+        // TitleView 고정
+        titleView.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top)
+            $0.leading.trailing.equalToSuperview().inset(16)
+            $0.height.equalTo(60)
         }
         
+        // ScrollView는 TitleView 아래부터 시작
+        scrollView.snp.makeConstraints {
+            $0.top.equalTo(titleView.snp.bottom)
+            $0.leading.trailing.bottom.equalToSuperview()
+        }
+
         contentView.snp.makeConstraints {
             $0.edges.equalToSuperview()
             $0.width.equalToSuperview()
         }
-        
-        titleView.snp.makeConstraints {
-            $0.top.leading.trailing.equalToSuperview().inset(16)
-        }
-        
+
         bookInfoView.snp.makeConstraints {
-            $0.top.equalTo(titleView.snp.bottom).offset(16)
+            $0.top.equalToSuperview().offset(16)
             $0.leading.trailing.equalToSuperview().inset(16)
         }
         
@@ -71,7 +83,7 @@ class BookViewController: UIViewController {
         chapterListView.snp.makeConstraints {
             $0.top.equalTo(summaryView.snp.bottom).offset(16)
             $0.leading.trailing.equalToSuperview().inset(16)
-            $0.bottom.equalToSuperview().inset(16) // 스크롤뷰 컨텐츠 하단 패딩
+            $0.bottom.equalToSuperview().inset(32) // 하단 여백
         }
     }
     
