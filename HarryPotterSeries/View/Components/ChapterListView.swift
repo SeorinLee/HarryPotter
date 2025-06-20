@@ -26,12 +26,12 @@ class ChapterListView: UIView {
 
         stackView.axis = .vertical
         stackView.spacing = 8
-        stackView.alignment = .leading  // 텍스트 왼쪽 정렬
+        stackView.alignment = .leading
 
         stackView.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(24) // 위 여백
-            $0.leading.trailing.equalToSuperview().inset(20) // 좌우 여백
-            $0.bottom.lessThanOrEqualToSuperview() // 너무 커지지 않도록 제한
+            $0.top.equalToSuperview().offset(24) 
+            $0.leading.trailing.equalToSuperview().inset(20)
+            $0.bottom.lessThanOrEqualToSuperview()
         }
     }
     
