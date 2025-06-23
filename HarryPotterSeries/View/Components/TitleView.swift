@@ -13,44 +13,36 @@ import SnapKit
 class TitleView: UIView {
     
     private let titleLabel = UILabel()
-    private let seriesOrderLabel = UILabel()
 
     override init(frame: CGRect) {
         super.init(frame: frame)
         setupUI()
     }
-    
-    required init?(coder: NSCoder) { fatalError() }
+
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     private func setupUI() {
-        [titleLabel, seriesOrderLabel].forEach { addSubview($0) }
-
-        titleLabel.font = .boldSystemFont(ofSize: 24)
-        titleLabel.textAlignment = .center
+        addSubview(titleLabel)
+        
+        // 책 제목 속성
+        titleLabel.font = .boldSystemFont(ofSize: 24)  // 시스템 볼드체, 24
+        titleLabel.textAlignment = .center               // 텍스트 가운데 정렬
         titleLabel.numberOfLines = 0
-        
-        seriesOrderLabel.font = .systemFont(ofSize: 16)
-        seriesOrderLabel.textAlignment = .center
-        seriesOrderLabel.textColor = .white
-        seriesOrderLabel.backgroundColor = .systemBlue
-        seriesOrderLabel.layer.cornerRadius = 20
-        seriesOrderLabel.clipsToBounds = true
-        
+
+        // AutoLayout
+
         titleLabel.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(10)
-            $0.leading.trailing.equalToSuperview().inset(20)
+            $0.top.equalTo(self.safeAreaLayoutGuide.snp.top).offset(10)  // safeArea에서 10 떨어짐
+            $0.leading.trailing.equalToSuperview().inset(20)             // superView에서 20씩 떨어짐
+            $0.bottom.equalToSuperview()                                 // 내용에 따라 유동적
         }
 
-        seriesOrderLabel.snp.makeConstraints {
-            $0.top.equalTo(titleLabel.snp.bottom).offset(16)
-            $0.centerX.equalToSuperview()
-            $0.width.height.equalTo(40)
-            $0.bottom.equalToSuperview()
-        }
     }
 
     func configure(title: String, order: Int) {
         titleLabel.text = title
-        seriesOrderLabel.text = "\(order)"
     }
 }

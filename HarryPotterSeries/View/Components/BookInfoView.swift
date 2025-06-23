@@ -97,15 +97,16 @@ class BookInfoView: UIView {
     
     private func setupLayout() {
         let authorStack = UIStackView(arrangedSubviews: [authorTitleLabel, authorLabel])
-        authorStack.axis = .vertical
-        authorStack.spacing = 8
 
+        authorStack.axis = .horizontal
+        authorStack.spacing = 8
+        
         let releaseStack = UIStackView(arrangedSubviews: [releaseTitleLabel, releaseLabel])
-        releaseStack.axis = .vertical
+        releaseStack.axis = .horizontal
         releaseStack.spacing = 8
 
         let pagesStack = UIStackView(arrangedSubviews: [pagesTitleLabel, pagesLabel])
-        pagesStack.axis = .vertical
+        pagesStack.axis = .horizontal
         pagesStack.spacing = 8
 
         let textStack = UIStackView(arrangedSubviews: [titleLabel, authorStack, releaseStack, pagesStack])
@@ -115,13 +116,13 @@ class BookInfoView: UIView {
         
         let mainStack = UIStackView(arrangedSubviews: [coverImageView, textStack])
         mainStack.axis = .horizontal
-        mainStack.spacing = 16
+        mainStack.spacing = 18
         mainStack.alignment = .top
         mainStack.distribution = .fill
         
         addSubview(mainStack)
         mainStack.snp.makeConstraints {
-            $0.leading.trailing.equalToSuperview().inset(5)
+            $0.leading.trailing.equalToSuperview().inset(20)
             $0.top.bottom.equalToSuperview()
         }
     }
