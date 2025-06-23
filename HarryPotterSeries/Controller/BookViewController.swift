@@ -43,7 +43,9 @@ class BookViewController: UIViewController {
         books = DataService.shared.fetchBooks()
 
         if books.isEmpty {
-            AlertManager.showErrorAlert(on: self, message: "책 데이터를 불러오는 데 실패했습니다.")
+            DispatchQueue.main.async{
+                AlertManager.showErrorAlert(on: self, message: "책 데이터를 불러오는 데 실패했습니다.")
+            }
             return
         }
 
@@ -88,17 +90,17 @@ class BookViewController: UIViewController {
         }
 
         bookInfoView.snp.makeConstraints {
-            $0.top.equalToSuperview().offset(16)
+            $0.top.equalToSuperview().offset(20)
             $0.leading.trailing.equalToSuperview().inset(16)
         }
 
         dedicationView.snp.makeConstraints {
-            $0.top.equalTo(bookInfoView.snp.bottom).offset(16)
+            $0.top.equalTo(bookInfoView.snp.bottom).offset(20)
             $0.leading.trailing.equalToSuperview().inset(16)
         }
 
         summaryView.snp.makeConstraints {
-            $0.top.equalTo(dedicationView.snp.bottom).offset(16)
+            $0.top.equalTo(dedicationView.snp.bottom).offset(20)
             $0.leading.trailing.equalToSuperview().inset(16)
         }
 
