@@ -39,7 +39,13 @@ class BookViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
+
         books = DataService.shared.fetchBooks()
+
+        if books.isEmpty {
+            AlertManager.showErrorAlert(on: self, message: "책 데이터를 불러오는 데 실패했습니다.")
+            return
+        }
 
         seriesCollectionView.dataSource = self
         seriesCollectionView.delegate = self
@@ -48,6 +54,7 @@ class BookViewController: UIViewController {
         setupUI()
         configureUI(for: 0)
     }
+
 
     private func setupUI() {
         view.addSubview(titleView)
