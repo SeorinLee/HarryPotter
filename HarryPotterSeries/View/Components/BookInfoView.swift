@@ -97,6 +97,7 @@ class BookInfoView: UIView {
     
     private func setupLayout() {
         let authorStack = UIStackView(arrangedSubviews: [authorTitleLabel, authorLabel])
+
         authorStack.axis = .horizontal
         authorStack.spacing = 8
         

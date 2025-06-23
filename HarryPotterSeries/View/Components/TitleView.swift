@@ -5,6 +5,8 @@
 //  Created by 이서린 on 6/16/25.
 //
 
+// TitleView.swift
+
 import UIKit
 import SnapKit
 
@@ -16,6 +18,7 @@ class TitleView: UIView {
         super.init(frame: frame)
         setupUI()
     }
+
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
@@ -30,11 +33,13 @@ class TitleView: UIView {
         titleLabel.numberOfLines = 0
 
         // AutoLayout
+
         titleLabel.snp.makeConstraints {
             $0.top.equalTo(self.safeAreaLayoutGuide.snp.top).offset(10)  // safeArea에서 10 떨어짐
             $0.leading.trailing.equalToSuperview().inset(20)             // superView에서 20씩 떨어짐
             $0.bottom.equalToSuperview()                                 // 내용에 따라 유동적
         }
+
     }
 
     func configure(title: String, order: Int) {
